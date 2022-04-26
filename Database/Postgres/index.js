@@ -11,10 +11,20 @@ const pool = new Pool({
 
 pool.connect()
 
-pool.query('SELECT NOW()', (err, res) => {
-  console.log(err, res)
-  pool.end()
-})
+module.exports = {
+  query: (text, callback) => {
+    const start = Date.now()
+    return pool.query(text, (err, res) => {
+      const duration = Date.now() - start;
+      console.log('executed query', { text, duration })
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res);
+      }
+    })
+  }
+}
 
 // const client = new Client({
 //   host: process.env.HOST,

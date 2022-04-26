@@ -4,7 +4,7 @@ CREATE DATABASE overview;
 
 \c overview;
 
-DROP TABLE IF EXISTS product, features, styles, photos, skus;
+DROP TABLE IF EXISTS product, features, styles, photos, skus, related;
 
 CREATE TABLE product (
   id SERIAL PRIMARY KEY,
@@ -23,10 +23,11 @@ CREATE TABLE features (
 
   FOREIGN KEY (product_id)
     REFERENCES product(id)
+
 );
 
 CREATE TABLE styles (
-  id SERIAL PRIMARY KEY,
+  style_id SERIAL PRIMARY KEY,
   productId INT NOT NULL,
   name VARCHAR(50) NOT NULL,
   sale_price VARCHAR(10),
@@ -44,7 +45,7 @@ CREATE TABLE photos (
   thumbnail_url TEXT,
 
   FOREIGN KEY (styleId)
-    REFERENCES styles(id)
+    REFERENCES styles(style_id)
 );
 
 CREATE TABLE skus (
@@ -54,7 +55,23 @@ CREATE TABLE skus (
   quantity INT,
 
   FOREIGN KEY (styleId)
-    REFERENCES styles(id)
+    REFERENCES styles(style_id)
+);
+
+CREATE TABLE related (
+  id SERIAL PRIMARY KEY,
+  productId INT NOT NULL,
+  related INT NOT NULL,
+
+  FOREIGN KEY (productId)
+    REFERENCES product(id)
 );
 
 
+
+CREATE INDEX photoId_index ON photos (styleId);
+CREATE INDEX skusId_index ON skus (styleId);
+CREATE INDEX stylesId_index ON styles (productId);
+CREATE INDEX featuresId_index ON features(product_id);
+CREATE INDEX relatedId_index ON related (productId);
+CREATE INDEX related_index ON related (related);

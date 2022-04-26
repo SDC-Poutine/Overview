@@ -9,3 +9,5 @@
 \COPY photos FROM '/Users/home/Desktop/csv/photos.csv' delimiter ',' csv header;
 
 \COPY skus FROM '/Users/home/Desktop/csv/skus.csv' delimiter ',' csv header;
+
+\COPY related FROM '/Users/home/Desktop/csv/related.csv' delimiter ',' csv header;
