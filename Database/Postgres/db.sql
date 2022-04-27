@@ -75,3 +75,5 @@ CREATE INDEX stylesId_index ON styles (productId);
 CREATE INDEX featuresId_index ON features(product_id);
 CREATE INDEX relatedId_index ON related (productId);
 CREATE INDEX related_index ON related (related);
+
+CREATE MATERIALIZED VIEW Product_view AS SELECT * FROM product
